@@ -40,7 +40,7 @@ const todoRoute = ({ req, res, data: todos }) => {
 			status: 200,
 			data: todos,
 		});
-		return;
+		return false;
 	}
 	if (req.url.startsWith('/todos/') && req.method === 'GET') {
 		try {
@@ -52,7 +52,7 @@ const todoRoute = ({ req, res, data: todos }) => {
 		} catch (error) {
 			ErrorHandler({ res, error });
 		}
-		return;
+		return false;
 	}
 	if (req.url === '/todos' && req.method === 'POST') {
 		req.on('end', () => {
@@ -71,7 +71,7 @@ const todoRoute = ({ req, res, data: todos }) => {
 				ErrorHandler({ res, error });
 			}
 		});
-		return;
+		return false;
 	}
 	if (req.url.startsWith('/todos/') && req.method === 'PATCH') {
 		req.on('end', () => {
@@ -94,7 +94,7 @@ const todoRoute = ({ req, res, data: todos }) => {
 				ErrorHandler({ res, error });
 			}
 		});
-		return;
+		return false;
 	}
 	if (req.url === '/todos' && req.method === 'DELETE') {
 		todos.length = 0;
@@ -103,7 +103,7 @@ const todoRoute = ({ req, res, data: todos }) => {
 			data: todos,
 			status: 200,
 		});
-		return;
+		return false;
 	}
 	if (req.url.startsWith('/todos/') && req.method === 'DELETE') {
 		try {
@@ -120,8 +120,9 @@ const todoRoute = ({ req, res, data: todos }) => {
 		} catch (error) {
 			ErrorHandler({ res, error });
 		}
-		return;
+		return false;
 	}
+	return true;
 };
 
 module.exports = todoRoute;
